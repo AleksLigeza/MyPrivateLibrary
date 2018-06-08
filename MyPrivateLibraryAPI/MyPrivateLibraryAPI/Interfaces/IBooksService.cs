@@ -8,12 +8,12 @@ namespace MyPrivateLibraryAPI.Interfaces
 {
     public interface IBooksService
     {
-        Task<List<Book>> GetBooks(string userId);
+        Task<List<Book>> GetAll(string userId);
         Task<List<Book>> GetBooksWithTitle(string userId, string title);
-        Task<List<Book>> GetBooksWithYear(string userId, int year);
-        Task<Book> GetBookById(int id);
+        Task<List<Book>> GetBooksWithYearBetween(string userId, int start, int end);
+        Task<Book> GetBookWithId(int id);
         Task AddBook(Book book);
-        Task RemoveBook(int id);
-        Task UpdateBook(Book book);
+        Task<bool> RemoveBook(int id);
+        Task<bool> UpdateBook(Book book);
     }
 }

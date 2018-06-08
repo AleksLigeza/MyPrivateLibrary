@@ -16,39 +16,56 @@ namespace MyPrivateLibraryAPI.Services
             _context = context;
         }
 
-        public Task<List<Book>> GetBooks(string userId)
+        public Task<List<Book>> GetAll(string userId)
         {
             return _context.Books.Where(x => x.UserId == userId).ToListAsync();
         }
 
         public Task<List<Book>> GetBooksWithTitle(string userId, string title)
         {
-            throw new NotImplementedException();
+            return _context.Books.Where(x => x.UserId == userId && x.Title.Contains(title)).ToListAsync();
         }
 
-        public Task<List<Book>> GetBooksWithYear(string userId, int year)
+        public Task<List<Book>> GetBooksWithYearBetween(string userId, int start, int end)
         {
-            throw new NotImplementedException();
+            return _context.Books.Where(x => x.UserId == userId && x.PublicationYear >= start && x.PublicationYear <= end).ToListAsync();
         }
 
-        public Task<Book> GetBookById(int id)
+        public Task<Book> GetBookWithId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Books.Where(x => x.Id == id).SingleOrDefaultAsync();
         }
 
         public Task AddBook(Book book)
         {
-            throw new NotImplementedException();
+            _context.Books.Add(book);
+            return _context.SaveChangesAsync();
         }
 
-        public Task RemoveBook(int id)
+        public async Task<bool> RemoveBook(int id)
         {
-            throw new NotImplementedException();
+            var book = await GetBookWithId(id);
+            if (book == null) return false;
+
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task UpdateBook(Book book)
+        public async Task<bool> UpdateBook(Book book)
         {
-            throw new NotImplementedException();
+            var toUpdate = await GetBookWithId(book.Id);
+            if (toUpdate == null) return false;
+
+            toUpdate.Isbn = book.Isbn;
+            toUpdate.PublicationYear = book.PublicationYear;
+            toUpdate.ReadingEnd = book.ReadingEnd;
+            toUpdate.ReadingStart = book.ReadingStart;
+            toUpdate.Title = book.Title;
+
+            _context.Books.Update(book);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

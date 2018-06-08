@@ -17,7 +17,10 @@ namespace MyPrivateLibraryAPI.Tests.Builders
                 Isbn = "",
                 Title = "",
                 UserId = "",
-                User = new ApplicationUser()
+                PublicationYear = 0,
+                ReadingStart = null,
+                ReadingEnd = null,
+                User = null
             };
         }
 
@@ -46,9 +49,29 @@ namespace MyPrivateLibraryAPI.Tests.Builders
             return this;
         }
 
+        public BookBuilder WithYear(int year)
+        {
+            _book.PublicationYear = year;
+            return this;
+        }
+
+        public BookBuilder WithReadingStart(DateTime start)
+        {
+            _book.ReadingStart = start;
+            return this;
+        }
+
+        public BookBuilder WithReadingEnd(DateTime end)
+        {
+            _book.ReadingEnd = end;
+            return this;
+        }
+
         public Book Build()
         {
             return _book;
         }
+
+
     }
 }

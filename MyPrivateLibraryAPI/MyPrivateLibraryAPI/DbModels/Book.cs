@@ -13,6 +13,10 @@ namespace MyPrivateLibraryAPI.DbModels
 
         public string Title { get; set; }
         public string Isbn { get; set; }
+        public int PublicationYear { get; set; }
+
+        public DateTime? ReadingStart { get; set; }
+        public DateTime? ReadingEnd { get; set; }
 
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
