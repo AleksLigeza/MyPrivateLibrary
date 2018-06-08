@@ -5,11 +5,11 @@ using MyPrivateLibraryAPI.Models;
 
 namespace MyPrivateLibraryAPI.Tests.Builders
 {
-    public class LoginModelBuilder
+    public class LoginRequestBuilder
     {
         private LoginRequest _loginRequest;
 
-        public LoginModelBuilder()
+        public LoginRequestBuilder()
         {
             _loginRequest = new LoginRequest
             {
@@ -18,13 +18,13 @@ namespace MyPrivateLibraryAPI.Tests.Builders
             };
         }
 
-        public LoginModelBuilder WithEmail(string email)
+        public LoginRequestBuilder WithEmail(string email)
         {
             _loginRequest.Email = email;
             return this;
         }
 
-        public LoginModelBuilder WithPassword(string password)
+        public LoginRequestBuilder WithPassword(string password)
         {
             _loginRequest.Password = password;
             return this;

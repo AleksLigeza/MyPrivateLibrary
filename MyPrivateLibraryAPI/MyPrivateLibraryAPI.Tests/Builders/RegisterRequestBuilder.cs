@@ -5,11 +5,11 @@ using MyPrivateLibraryAPI.Models;
 
 namespace MyPrivateLibraryAPI.Tests.Builders
 {
-    public class RegisterModelBuilder
+    public class RegisterRequestBuilder
     {
         private RegisterRequest _registerRequest;
 
-        public RegisterModelBuilder()
+        public RegisterRequestBuilder()
         {
             _registerRequest = new RegisterRequest
             {
@@ -20,25 +20,25 @@ namespace MyPrivateLibraryAPI.Tests.Builders
             };
         }
 
-        public RegisterModelBuilder WithEmail(string email)
+        public RegisterRequestBuilder WithEmail(string email)
         {
             _registerRequest.Email = email;
             return this;
         }
 
-        public RegisterModelBuilder WithFirstname(string firstname)
+        public RegisterRequestBuilder WithFirstname(string firstname)
         {
             _registerRequest.Firstname = firstname;
             return this;
         }
 
-        public RegisterModelBuilder WithLastname(string lastname)
+        public RegisterRequestBuilder WithLastname(string lastname)
         {
             _registerRequest.Lastname = lastname;
             return this;
         }
 
-        public RegisterModelBuilder WithPassword(string password)
+        public RegisterRequestBuilder WithPassword(string password)
         {
             _registerRequest.Password = password;
             return this;

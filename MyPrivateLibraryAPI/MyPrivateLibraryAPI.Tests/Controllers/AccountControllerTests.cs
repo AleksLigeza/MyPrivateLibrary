@@ -19,7 +19,7 @@ namespace MyPrivateLibraryAPI.Tests
         public async Task Login_ValidUserData_ReturnsToken()
         {
             // Arrange
-            var loginRequest = new LoginModelBuilder()
+            var loginRequest = new LoginRequestBuilder()
                 .WithPassword("pass12345")
                 .WithEmail("someemail@email.com")
                 .Build();
@@ -55,7 +55,7 @@ namespace MyPrivateLibraryAPI.Tests
         public async Task Login_NotValidUserData_ReturnsUnauthorized()
         {
             // Arrange
-            var loginRequest = new LoginModelBuilder()
+            var loginRequest = new LoginRequestBuilder()
                 .WithPassword("pass12345")
                 .WithEmail("someemail@email.com")
                 .Build();
@@ -86,7 +86,7 @@ namespace MyPrivateLibraryAPI.Tests
         public async Task Register_ValidUserData_ReturnsToken()
         {
             // Arrange
-            var registerRequest = new RegisterModelBuilder()
+            var registerRequest = new RegisterRequestBuilder()
                 .WithEmail("someemail@email.com")
                 .WithFirstname("firstname")
                 .WithLastname("lastname")
@@ -115,7 +115,7 @@ namespace MyPrivateLibraryAPI.Tests
         public async Task Register_NotValidUserData_ReturnsBadRequest()
         {
             // Arrange
-            var registerRequest = new RegisterModelBuilder()
+            var registerRequest = new RegisterRequestBuilder()
                 .WithEmail("someemail@email.com")
                 .WithFirstname("firstname")
                 .WithLastname("lastname")

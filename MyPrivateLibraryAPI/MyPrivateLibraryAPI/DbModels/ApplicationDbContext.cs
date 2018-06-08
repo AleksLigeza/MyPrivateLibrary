@@ -13,23 +13,14 @@ namespace MyPrivateLibraryAPI.DbModels
             : base(options)
         { }
 
-        public DbSet<Book> Books { get; set; }
-        public DbSet<UserBook> UserBooks { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserBook>()
-                .HasKey(x => new { x.UserId, x.BookId });
-
-            modelBuilder.Entity<Book>()
-                .HasMany(x => x.UserBooks)
-                .WithOne(x => x.Book)
-                .HasForeignKey(x => x.BookId);
-
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(x => x.UserBooks)
+                .HasMany(x => x.Books)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
         }

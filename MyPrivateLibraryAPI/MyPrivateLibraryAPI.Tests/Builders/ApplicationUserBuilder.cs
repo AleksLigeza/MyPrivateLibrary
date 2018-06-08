@@ -49,19 +49,12 @@ namespace MyPrivateLibraryAPI.Tests.Builders
 
         public ApplicationUserBuilder WithBook(Book book)
         {
-            if (_user.UserBooks == null)
+            if (_user.Books == null)
             {
-                _user.UserBooks = new List<UserBook>();
+                _user.Books = new List<Book>();
             }
 
-            _user.UserBooks.Add(new UserBook
-            {
-                BookId = book.Id,
-                Book = book,
-                UserId = _user.Id,
-                User = _user
-            });
-
+            _user.Books.Add(book);
             return this;
         }
 

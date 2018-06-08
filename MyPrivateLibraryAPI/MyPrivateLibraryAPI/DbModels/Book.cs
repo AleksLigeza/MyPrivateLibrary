@@ -14,6 +14,7 @@ namespace MyPrivateLibraryAPI.DbModels
         public string Title { get; set; }
         public string Isbn { get; set; }
 
-        public virtual ICollection<UserBook> UserBooks { get; set; }
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }
