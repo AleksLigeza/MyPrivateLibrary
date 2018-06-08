@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyPrivateLibraryAPI.DbModels
+namespace MyPrivateLibraryAPI.Models
 {
-    public class Book
+    public class BookRequest
     {
-        [Key]
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -16,8 +14,6 @@ namespace MyPrivateLibraryAPI.DbModels
 
         public DateTime? ReadingStart { get; set; }
         public DateTime? ReadingEnd { get; set; }
-
         public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
     }
 }

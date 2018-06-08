@@ -20,6 +20,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using MyPrivateLibraryAPI.Interfaces;
+using MyPrivateLibraryAPI.Services;
 
 namespace MyPrivateLibraryAPI
 {
@@ -30,7 +32,7 @@ namespace MyPrivateLibraryAPI
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -84,6 +86,9 @@ namespace MyPrivateLibraryAPI
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            services.AddScoped<IBooksService, BooksService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddMvc();
         }

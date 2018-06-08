@@ -65,7 +65,7 @@ namespace MyPrivateLibraryAPI.Tests.Services
         }
 
         [Fact]
-        public async Task GetBookWithTitle_UserHasTwoBooksWithTitleLike_ReturnsTwoBooks()
+        public async Task GetFilteredBooks_UserHasTwoBooksWithTitleLike_ReturnsTwoBooks()
         {
             // Arrange
             var userOne = new ApplicationUserBuilder().WithId("1").Build();
@@ -80,16 +80,17 @@ namespace MyPrivateLibraryAPI.Tests.Services
             var dbset = GenerateEnumerableDbSetMock(data.AsQueryable());
             var context = GenerateEnumerableContextMock(dbset);
             var booksService = new BooksService(context.Object);
+            var filters = new BookFiltersBuilder().WithTitle("b").Build();
 
             // Act
-            var result = await booksService.GetBooksWithTitle(userOne.Id, "b");
+            var result = await booksService.GetFilteredBooks(userOne.Id, filters);
 
             // Assert
             result.Should().HaveCount(2);
         }
 
         [Fact]
-        public async Task GetBookWithTitle_UserHasZeroBooksWithTitleLike_ReturnsZeroBooks()
+        public async Task GetFilteredBooks_UserHasZeroBooksWithTitleLike_ReturnsZeroBooks()
         {
             // Arrange
             var userOne = new ApplicationUserBuilder().WithId("1").Build();
@@ -103,16 +104,17 @@ namespace MyPrivateLibraryAPI.Tests.Services
             var dbset = GenerateEnumerableDbSetMock(data.AsQueryable());
             var context = GenerateEnumerableContextMock(dbset);
             var booksService = new BooksService(context.Object);
+            var filters = new BookFiltersBuilder().WithTitle("b").Build();
 
             // Act
-            var result = await booksService.GetBooksWithTitle(userOne.Id, "b");
+            var result = await booksService.GetFilteredBooks(userOne.Id, filters);
 
             // Assert
             result.Should().HaveCount(0);
         }
 
         [Fact]
-        public async Task GetBookWithYearBetween_UserHasZeroBooksWithYear_ReturnsZeroBooks()
+        public async Task GetFilteredBooks_UserHasZeroBooksWithYear_ReturnsZeroBooks()
         {
             // Arrange
             var userOne = new ApplicationUserBuilder().WithId("1").Build();
@@ -126,16 +128,20 @@ namespace MyPrivateLibraryAPI.Tests.Services
             var dbset = GenerateEnumerableDbSetMock(data.AsQueryable());
             var context = GenerateEnumerableContextMock(dbset);
             var booksService = new BooksService(context.Object);
+            var filters = new BookFiltersBuilder()
+                .WithPublicationYearSince(2005)
+                .WithPublicationYearTo(2015)
+                .Build();
 
             // Act
-            var result = await booksService.GetBooksWithYearBetween(userOne.Id, 2005, 2015);
+            var result = await booksService.GetFilteredBooks(userOne.Id, filters);
 
             // Assert
             result.Should().HaveCount(0);
         }
 
         [Fact]
-        public async Task GetBookWithYearBetween_UserHasTwoBooksWithYear_ReturnsTwoBooks()
+        public async Task GetFilteredBooks_UserHasTwoBooksWithYear_ReturnsTwoBooks()
         {
             // Arrange
             var userOne = new ApplicationUserBuilder().WithId("1").Build();
@@ -149,12 +155,87 @@ namespace MyPrivateLibraryAPI.Tests.Services
             var dbset = GenerateEnumerableDbSetMock(data.AsQueryable());
             var context = GenerateEnumerableContextMock(dbset);
             var booksService = new BooksService(context.Object);
+            var filters = new BookFiltersBuilder()
+                .WithPublicationYearSince(2005)
+                .WithPublicationYearTo(2015)
+                .Build();
 
             // Act
-            var result = await booksService.GetBooksWithYearBetween(userOne.Id, 2005, 2015);
+            var result = await booksService.GetFilteredBooks(userOne.Id, filters);
 
             // Assert
             result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task GetFilteredBooks_UserHasOneReadBook_ReturnsOneBook()
+        {
+            // Arrange
+            var tenDaysAgo = DateTime.Now.Subtract(new TimeSpan(10, 0, 0, 0));
+            var fiveDaysAgo = DateTime.Now.Subtract(new TimeSpan(5, 0, 0, 0));
+            var userOne = new ApplicationUserBuilder().WithId("1").Build();
+            var userTwo = new ApplicationUserBuilder().WithId("2").Build();
+            var data = new List<Book>
+            {
+                new BookBuilder().WithUser(userOne)
+                    .WithReadingStart(tenDaysAgo)
+                    .WithReadingEnd(fiveDaysAgo)
+                    .Build(),
+                new BookBuilder().WithUser(userOne)
+                    .WithReadingStart(tenDaysAgo)
+                    .Build(),
+                new BookBuilder().WithUser(userTwo)
+                    .WithReadingStart(tenDaysAgo)
+                    .WithReadingEnd(fiveDaysAgo)
+                    .Build()
+            };
+            var dbset = GenerateEnumerableDbSetMock(data.AsQueryable());
+            var context = GenerateEnumerableContextMock(dbset);
+            var booksService = new BooksService(context.Object);
+            var filters = new BookFiltersBuilder()
+                .WithReadStatus(true)
+                .Build();
+
+            // Act
+            var result = await booksService.GetFilteredBooks(userOne.Id, filters);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async Task GetFilteredBooks_UserHasOneCurrentlyReadingBook_ReturnsOneBook()
+        {
+            // Arrange
+            var tenDaysAgo = DateTime.Now.Subtract(new TimeSpan(10, 0, 0, 0));
+            var fiveDaysAgo = DateTime.Now.Subtract(new TimeSpan(5, 0, 0, 0));
+            var userOne = new ApplicationUserBuilder().WithId("1").Build();
+            var userTwo = new ApplicationUserBuilder().WithId("2").Build();
+            var data = new List<Book>
+            {
+                new BookBuilder().WithUser(userOne)
+                    .WithReadingStart(tenDaysAgo)
+                    .WithReadingEnd(fiveDaysAgo)
+                    .Build(),
+                new BookBuilder().WithUser(userOne)
+                    .WithReadingStart(tenDaysAgo)
+                    .Build(),
+                new BookBuilder().WithUser(userTwo)
+                    .WithReadingStart(tenDaysAgo)
+                    .Build()
+            };
+            var dbset = GenerateEnumerableDbSetMock(data.AsQueryable());
+            var context = GenerateEnumerableContextMock(dbset);
+            var booksService = new BooksService(context.Object);
+            var filters = new BookFiltersBuilder()
+                .WithCurrentlyReadingStatus(true)
+                .Build();
+
+            // Act
+            var result = await booksService.GetFilteredBooks(userOne.Id, filters);
+
+            // Assert
+            result.Should().HaveCount(1);
         }
 
         [Fact]
@@ -352,7 +433,6 @@ namespace MyPrivateLibraryAPI.Tests.Services
             var updatedBook = new BookBuilder()
                 .WithId(book.Id)
                 .WithTitle("aa")
-                .WithIsbn("11")
                 .WithReadingEnd(DateTime.Today)
                 .WithReadingStart(DateTime.Today)
                 .WithYear(2000)

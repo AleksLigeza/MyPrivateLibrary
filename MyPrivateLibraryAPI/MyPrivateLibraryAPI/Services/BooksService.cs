@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyPrivateLibraryAPI.DbModels;
 using MyPrivateLibraryAPI.Interfaces;
+using MyPrivateLibraryAPI.Models;
 
 namespace MyPrivateLibraryAPI.Services
 {
@@ -21,14 +22,33 @@ namespace MyPrivateLibraryAPI.Services
             return _context.Books.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public Task<List<Book>> GetBooksWithTitle(string userId, string title)
+        public Task<List<Book>> GetFilteredBooks(string userId, BookFilters filters)
         {
-            return _context.Books.Where(x => x.UserId == userId && x.Title.Contains(title)).ToListAsync();
-        }
+            var books = _context.Books.Where(x => x.UserId == userId);
 
-        public Task<List<Book>> GetBooksWithYearBetween(string userId, int start, int end)
-        {
-            return _context.Books.Where(x => x.UserId == userId && x.PublicationYear >= start && x.PublicationYear <= end).ToListAsync();
+            if(filters.PublicationYearSince != null)
+            {
+                books = books.Where(x => x.PublicationYear >= filters.PublicationYearSince);
+            }
+            if(filters.PublicationYearTo != null)
+            {
+                books = books.Where(x => x.PublicationYear <= filters.PublicationYearTo);
+            }
+            if(filters.Title != null)
+            {
+                books = books.Where(x => x.Title.Contains(filters.Title));
+            }
+
+            if(filters.Read != null)
+            {
+                books = books.Where(x => x.ReadingEnd <= DateTime.UtcNow);
+            }
+            else if(filters.CurrentlyReading != null)
+            {
+                books = books.Where(x => x.ReadingStart <= DateTime.UtcNow && x.ReadingEnd == null);
+            }
+
+            return books.ToListAsync();
         }
 
         public Task<Book> GetBookWithId(int id)
@@ -45,7 +65,8 @@ namespace MyPrivateLibraryAPI.Services
         public async Task<bool> RemoveBook(int id)
         {
             var book = await GetBookWithId(id);
-            if (book == null) return false;
+            if(book == null)
+                return false;
 
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
@@ -55,9 +76,9 @@ namespace MyPrivateLibraryAPI.Services
         public async Task<bool> UpdateBook(Book book)
         {
             var toUpdate = await GetBookWithId(book.Id);
-            if (toUpdate == null) return false;
+            if(toUpdate == null)
+                return false;
 
-            toUpdate.Isbn = book.Isbn;
             toUpdate.PublicationYear = book.PublicationYear;
             toUpdate.ReadingEnd = book.ReadingEnd;
             toUpdate.ReadingStart = book.ReadingStart;

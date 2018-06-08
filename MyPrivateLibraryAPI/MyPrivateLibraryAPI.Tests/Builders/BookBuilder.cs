@@ -14,7 +14,6 @@ namespace MyPrivateLibraryAPI.Tests.Builders
             _book = new Book()
             {
                 Id = 1,
-                Isbn = "",
                 Title = "",
                 UserId = "",
                 PublicationYear = 0,
@@ -27,12 +26,6 @@ namespace MyPrivateLibraryAPI.Tests.Builders
         public BookBuilder WithId(int id)
         {
             _book.Id = id;
-            return this;
-        }
-
-        public BookBuilder WithIsbn(string isbn)
-        {
-            _book.Isbn = isbn;
             return this;
         }
 
