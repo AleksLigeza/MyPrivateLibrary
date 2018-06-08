@@ -8,7 +8,7 @@ using MyPrivateLibraryAPI.DbModels;
 
 namespace MyPrivateLibraryAPI.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -9,7 +9,7 @@ using MyPrivateLibraryAPI.DbModels;
 
 namespace MyPrivateLibraryAPI.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20180608132814_ChangeUserBookKey")]
     partial class ChangeUserBookKey
     {

@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MyPrivateLibraryAPI.DbModels
 {
-    public class ApplicationContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         { }
 
