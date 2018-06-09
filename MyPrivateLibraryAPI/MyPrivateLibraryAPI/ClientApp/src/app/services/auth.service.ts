@@ -72,6 +72,6 @@ export class AuthService {
     }
 
     saveToken(token) {
-        localStorage.setItem(this.TOKEN_KEY, 'Bearer ' + token);
+        localStorage.setItem(this.TOKEN_KEY, token);
     }
 }

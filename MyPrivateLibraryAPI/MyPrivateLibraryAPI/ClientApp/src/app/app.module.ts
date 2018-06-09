@@ -16,6 +16,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { ErrorComponent } from './error/error.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlertComponent } from './alert/alert.component';
+import { BooksService } from './services/books-service.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AlertComponent } from './alert/alert.component';
       multi: true,
     },
     AlertService,
+    BooksService,
     AuthService,
     AuthGuard
   ],

@@ -13,7 +13,7 @@
           <div class="form-group" [class.has-error]="loginEmail.invalid && loginEmail.touched">
             <label class="sr-only" for="loginEmail">Email</label>
 
-            <input autocomplete="off" #loginEmail="ngModel" required email maxlength="50" class="form-control" name="loginEmail" placeholder="Email"
+            <input autocomplete="on" #loginEmail="ngModel" required email maxlength="50" class="form-control" name="loginEmail" placeholder="Email"
               [(ngModel)]="loginData.email">
 
           </div>
@@ -21,7 +21,7 @@
           <div class="form-group" [class.has-error]="loginPassword.invalid && loginPassword.dirty">
             <label class="sr-only" for="loginPassword">Password</label>
 
-            <input autocomplete="off" #loginPassword="ngModel" required minlength="6" maxlength="50" type="password" class="form-control"
+            <input autocomplete="on" #loginPassword="ngModel" required minlength="6" maxlength="50" type="password" class="form-control"
               name="loginPassword" placeholder="Password" [(ngModel)]="loginData.password">
 
           </div>
@@ -45,7 +45,7 @@
           <div class="form-group">
             <label class="sr-only" for="registerEmail">Email</label>
 
-            <input autocomplete="off" #registerEmail="ngModel" required email maxlength="50" class="form-control" name="registerEmail"
+            <input autocomplete="on" #registerEmail="ngModel" required email maxlength="50" class="form-control" name="registerEmail"
               placeholder="Email" [(ngModel)]="registerData.email">
 
           </div>
@@ -53,7 +53,7 @@
           <div class="form-group" [class.has-error]="registerFirstname.invalid && registerFirstname.touched">
             <label class="sr-only" for="registerFirstname">Firstname</label>
 
-            <input autocomplete="off" #registerFirstname="ngModel" required maxlength="50" class="form-control" name="registerFirstname"
+            <input autocomplete="on" #registerFirstname="ngModel" required maxlength="50" class="form-control" name="registerFirstname"
               placeholder="Firstname" [(ngModel)]="registerData.firstname">
 
           </div>
@@ -61,7 +61,7 @@
           <div class="form-group" [class.has-error]="registerLastname.invalid && registerLastname.touched">
             <label class="sr-only" for="registerLastname">Lastname</label>
 
-            <input autocomplete="off" #registerLastname="ngModel" required maxlength="50" class="form-control" name="registerLastname"
+            <input autocomplete="on" #registerLastname="ngModel" required maxlength="50" class="form-control" name="registerLastname"
               placeholder="Lastname" [(ngModel)]="registerData.lastname">
 
           </div>
@@ -69,7 +69,7 @@
           <div class="form-group" [class.has-error]="registerPassword.invalid && registerPassword.dirty">
             <label class="sr-only" for="registerPassword">Password</label>
 
-            <input autocomplete="off" #registerPassword="ngModel" required minlength="5" maxlength="50" type="password" class="form-control"
+            <input autocomplete="on" #registerPassword="ngModel" required minlength="5" maxlength="50" type="password" class="form-control"
               name="registerPassword" placeholder="Password" [(ngModel)]="registerData.password">
 
           </div>
@@ -77,7 +77,7 @@
           <div class="form-group" [class.has-error]="registerPasswordRepeat.dirty && (registerPasswordRepeat.invalid || !(registerData.password === registerData.passwordRepeat))">
             <label class="sr-only" for="registerPasswordRepeat">Repeat your password</label>
 
-            <input autocomplete="off" #registerPasswordRepeat="ngModel" required minlength="5" maxlength="50" type="password" class="form-control"
+            <input autocomplete="on" #registerPasswordRepeat="ngModel" required minlength="5" maxlength="50" type="password" class="form-control"
               name="registerPasswordRepeat" placeholder="Repeat password" [(ngModel)]="registerData.passwordRepeat">
 
           </div>

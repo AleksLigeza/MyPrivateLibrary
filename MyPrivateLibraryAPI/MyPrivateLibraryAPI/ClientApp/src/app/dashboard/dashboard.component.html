@@ -1,3 +1,49 @@
-<p>
-  dashboard works!
-</p>
+<div class="row">
+  <div class="col-md-12 col-centered">
+    <div class="form-box">
+      <div class="form-top-simple">
+        <div class="form-top-full">
+          <h3>
+            <b>My books</b>
+          </h3>
+        </div>
+      </div>
+      <div class="form-bottom">
+        <div class="form-group-border form-inline">
+          <h4>Publication year</h4>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <span class="input-group-text">Since:</span>
+            </div>
+            <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="filters.PublicationYearSince">
+          </div>
+          <div class="input-group">
+            <div class="input-group-addon">
+              <span class="input-group-text">To:</span>
+            </div>
+            <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="filters.PublicationYearTo">
+          </div>
+
+          <h4>Title</h4>
+          <div class="input-group col-sm-10 mb-2">
+            <input type="text" maxlength="50" class="form-control" [(ngModel)]="filters.Title">
+          </div>
+
+          <h4>Filter</h4>
+          <div class="btn-group buttons">
+            <button type="button" class="btn btn-info" (click)="changeType(0)" [class.active]="filtersPos===0">All</button>
+            <button type="button" class="btn btn-info" (click)="changeType(1)" [class.active]="filtersPos===1">Read</button>
+            <button type="button" class="btn btn-info" (click)="changeType(2)" [class.active]="filtersPos===2">Currently reading</button>
+          </div>
+
+          <div class="form-button">
+            <button type="button" class="btn btn-success btn-bold" (click)="allowResetBooks();getBooksWithFilters()">Filtruj</button>
+            <button type="button" class="btn btn-warning btn-bold" (click)="clearFilters();allowResetBooks();getBooks()">Wyczyść</button>
+          </div>
+        </div>
+        <hr>
+
+      </div>
+    </div>
+  </div>
+</div>
