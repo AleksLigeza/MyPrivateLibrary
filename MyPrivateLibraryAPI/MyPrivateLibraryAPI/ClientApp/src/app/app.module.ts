@@ -17,6 +17,7 @@ import { ErrorComponent } from './error/error.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AlertComponent } from './alert/alert.component';
 import { BooksService } from './services/books-service.service';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BooksService } from './services/books-service.service';
     FetchDataComponent,
     ErrorComponent,
     DashboardComponent,
-    AlertComponent
+    AlertComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,6 +39,7 @@ import { BooksService } from './services/books-service.service';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent},
       { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+      { path: 'details/:id', component: DetailsComponent, canActivate: [AuthGuard] },
       { path: 'error', component: ErrorComponent },
     ]),
   ],

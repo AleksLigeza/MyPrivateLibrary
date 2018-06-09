@@ -1,110 +1,114 @@
-<div class="tr">
-  <div class="col-md-12 col-centered">
-    <div class="form-box">
-      <div class="form-top-simple">
-        <div class="form-top-full">
-          <h3>
-            <b>My books</b>
-          </h3>
+<div class="col-md-12 col-centered">
+  <div class="form-box">
+    <div class="form-top-simple">
+      <div class="form-top-full">
+        <h3>
+          <b>My books</b>
+        </h3>
+      </div>
+    </div>
+    <div class="form-bottom">
+
+      <div class="form-group-border">
+        <h4>
+          <b>Add new book</b>
+        </h4>
+        <div class="form-inline">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <span class="input-group-text">Publication year:</span>
+            </div>
+            <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="newBook.PublicationYear">
+          </div>
+
+          <div class="input-group">
+            <div class="input-group-addon">
+              <span class="input-group-text">Title:</span>
+            </div>
+            <input type="text" maxlength="50" class="form-control" [(ngModel)]="newBook.Title">
+          </div>
+
+          <button type="button" class="btn btn-success" (click)="AddBook()"> Add book</button>
         </div>
       </div>
-      <div class="form-bottom">
 
-        <div class="form-group-border">
-          <h4>
-            <b>Add new book</b>
-          </h4>
-          <div class="form-inline">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <span class="input-group-text">Publication year:</span>
-              </div>
-              <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="newBook.PublicationYear">
-            </div>
+      <hr>
 
-            <div class="input-group">
-              <div class="input-group-addon">
-                <span class="input-group-text">Title:</span>
-              </div>
-              <input type="text" maxlength="50" class="form-control" [(ngModel)]="newBook.Title">
-            </div>
-
-            <button type="button" class="btn btn-success" (click)="AddBook()"> Add book</button>
+      <div class="form-group-border form-inline">
+        <h4>Publication year</h4>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="input-group-text">Since:</span>
           </div>
+          <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="filters.PublicationYearSince">
+        </div>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="input-group-text">To:</span>
+          </div>
+          <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="filters.PublicationYearTo">
         </div>
 
-        <hr>
-
-        <div class="form-group-border form-inline">
-          <h4>Publication year</h4>
-          <div class="input-group">
-            <div class="input-group-addon">
-              <span class="input-group-text">Since:</span>
-            </div>
-            <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="filters.PublicationYearSince">
-          </div>
-          <div class="input-group">
-            <div class="input-group-addon">
-              <span class="input-group-text">To:</span>
-            </div>
-            <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="filters.PublicationYearTo">
-          </div>
-
-          <h4>Title</h4>
-          <div class="input-group col-sm-10 mb-2">
-            <input type="text" maxlength="50" class="form-control" [(ngModel)]="filters.Title">
-          </div>
-
-          <h4>Filter</h4>
-          <div class="btn-group buttons">
-            <button type="button" class="btn btn-info" (click)="changeType(0)" [class.active]="filtersPos===0">All</button>
-            <button type="button" class="btn btn-info" (click)="changeType(1)" [class.active]="filtersPos===1">Read</button>
-            <button type="button" class="btn btn-info" (click)="changeType(2)" [class.active]="filtersPos===2">Currently reading</button>
-          </div>
-
-          <div class="form-button">
-            <button type="button" class="btn btn-success btn-bold" (click)="allowResetBooks();getBooksWithFilters()">Filtruj</button>
-            <button type="button" class="btn btn-warning btn-bold" (click)="clearFilters();allowResetBooks();getBooks()">Wyczyść</button>
-          </div>
+        <h4>Title</h4>
+        <div class="input-group col-sm-10 mb-2">
+          <input type="text" maxlength="50" class="form-control" [(ngModel)]="filters.Title">
         </div>
 
-        <hr>
-
-        <div class="form-group-border">
-          <table class="table table-hover">
-            <thead>
-              <th>Title</th>
-              <th>Year</th>
-              <th>Management</th>
-            </thead>
-            <tbody>
-
-              <tr *ngIf="!books.length">
-                <td colspan="3">There are no books</td>
-              </tr>
-              <tr class="list-item justify-content-center" *ngFor="let book of books">
-                <td>
-                  {{book.title}}
-                </td>
-                <td>
-                  {{book.publicationYear}}
-                </td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="$event.stopPropagation();bookDetails(book.Id)">
-                    <div class="glyphicon glyphicon-cog"></div>
-                  </button>
-                  <span *ngIf="book.readingEnd != null">Read</span>
-                  <button *ngIf="book.readingStart !== null && book.readingEnd === null" type="button" class="btn btn-success" (click)="$event.stopPropagation();AddEndTime(book)">
-                    I've read
-                  </button>
-                  <button *ngIf="book.readingStart === null" type="button" class="btn btn-success" (click)="$event.stopPropagation();AddStartTime(book)">
-                    I'm reading
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <h4>Status</h4>
+        <div class="btn-group buttons">
+          <button type="button" class="btn btn-info" (click)="changeType(0)" [class.active]="filtersPos===0">All</button>
+          <button type="button" class="btn btn-info" (click)="changeType(1)" [class.active]="filtersPos===1">Read</button>
+          <button type="button" class="btn btn-info" (click)="changeType(2)" [class.active]="filtersPos===2">Currently reading</button>
         </div>
+
+        <div class="form-button">
+          <button type="button" class="btn btn-success btn-bold" (click)="allowResetBooks();getBooksWithFilters()">Apply filer</button>
+          <button type="button" class="btn btn-warning btn-bold" (click)="clearFilters();allowResetBooks();getBooks()">Clear filter</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="form-group-border">
+        <table class="table table-hover" style="text-align: center">
+          <thead>
+            <th class="centerHeader">Title</th>
+            <th class="centerHeader">Year</th>
+            <th class="centerHeader">Status</th>
+            <th class="centerHeader">Management</th>
+          </thead>
+          <tbody>
+
+            <tr *ngIf="!books.length">
+              <td colspan="4">There are no books</td>
+            </tr>
+            <tr class="list-item justify-content-center" *ngFor="let book of books">
+              <td>
+                {{book.title}}
+              </td>
+              <td>
+                {{book.publicationYear}}
+              </td>
+              <td>
+                <span *ngIf="book.readingEnd != null">Read</span>
+                <button *ngIf="book.readingStart !== null && book.readingEnd === null" type="button" class="btn btn-success" (click)="$event.stopPropagation();AddEndTime(book)">
+                  I've read
+                </button>
+                <button *ngIf="book.readingStart === null" type="button" class="btn btn-success" (click)="$event.stopPropagation();AddStartTime(book)">
+                  I'm reading
+                </button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-info" (click)="$event.stopPropagation();BookDetails(book.Id)">
+                  <div class="glyphicon glyphicon-cog"></div>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="$event.stopPropagation();RemoveBook(book.Id)">
+                  <div class="glyphicon glyphicon-trash"></div>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -84,7 +84,7 @@ namespace MyPrivateLibraryAPI.Services
             toUpdate.ReadingStart = book.ReadingStart;
             toUpdate.Title = book.Title;
 
-            _context.Books.Update(book);
+            _context.Books.Update(toUpdate);
             await _context.SaveChangesAsync();
             return true;
         }

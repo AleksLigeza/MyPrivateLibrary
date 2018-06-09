@@ -106,10 +106,14 @@ namespace MyPrivateLibraryAPI.Controllers
             var user = await GetCurrentUser();
             var book = AutoMapper.Mapper.Map<Book>(bookRequest);
 
-            if(book != null && book.UserId != user.Id)
+            var toUpdate = await _booksService.GetBookWithId(book.Id);
+            if(toUpdate.UserId != user.Id)
             {
                 return NoContent();
             }
+
+            book.User = user;
+            book.UserId = user.Id;
 
             if(!await _booksService.UpdateBook(book))
             {

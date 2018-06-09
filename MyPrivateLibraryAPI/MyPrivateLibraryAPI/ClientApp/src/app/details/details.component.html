@@ -1,0 +1,54 @@
+<div class="col-md-12 col-centered">
+  <div class="form-box">
+    <div class="form-top-simple">
+      <div class="form-top-full">
+        <h3>
+          <b>Book details</b>
+        </h3>
+      </div>
+    </div>
+    <div class="form-bottom">
+
+      <div class="input-group details-group">
+        <div class="input-group-addon">
+          <span class="input-group-text">Id:</span>
+        </div>
+        <input type="text" class="form-control" [(ngModel)]="myBook.id" readonly>
+      </div>
+
+      <div class="input-group details-group">
+        <div class="input-group-addon">
+          <span class="input-group-text">Title:</span>
+        </div>
+        <input type="text" maxlength="50" class="form-control" [(ngModel)]="myBook.title">
+      </div>
+
+      <div class="input-group details-group">
+        <div class="input-group-addon">
+          <span class="input-group-text">Publication year:</span>
+        </div>
+        <input type="number" max="2100" min="0" class="form-control" [(ngModel)]="myBook.publicationYear">
+      </div>
+
+      <div class="input-group details-group">
+        <div class="input-group-addon">
+          <span class="input-group-text">Reading start:</span>
+        </div>
+        <input type="datetime" class="form-control" [(ngModel)]="myBook.readingStart">
+      </div>
+
+      <div class="input-group details-group">
+        <div class="input-group-addon">
+          <span class="input-group-text">Reading end:</span>
+        </div>
+        <input type="datetime" class="form-control" [(ngModel)]="myBook.readingEnd">
+      </div>
+
+      <div class="form-button">
+        <button type="button" class="btn btn-success btn-info" (click)="GoBack()">Go back</button>
+        <button type="button" class="btn btn-warning btn-success" (click)="Update(myBook)">Update</button>
+        <button type="button" class="btn btn-warning btn-danger" (click)="Remove(myBook.id)">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>

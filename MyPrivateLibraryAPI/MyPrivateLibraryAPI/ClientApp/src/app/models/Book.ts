@@ -27,4 +27,8 @@ export class Book {
     static normalize(book: Book, id: number) {
         book.Id = id.toString();
     }
+
+    static FromResult(res): Book {
+        return res;
+      }
 }

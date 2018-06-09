@@ -18,6 +18,10 @@
     text-align: right !important;
 }
 
-.title, .year {
-    text-align: left !important;
+.btn-management {
+    width: 80px;
+}
+
+.centerHeader {
+    text-align: center;
 }
