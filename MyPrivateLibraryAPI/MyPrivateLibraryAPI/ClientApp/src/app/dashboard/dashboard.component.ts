@@ -46,7 +46,6 @@ export class DashboardComponent implements OnInit {
   }
 
   changeOrder(pos: number) {
-    this.reloadPage();
     this.filters.Order = pos;
     this.getBooksWithFilters();
   }
