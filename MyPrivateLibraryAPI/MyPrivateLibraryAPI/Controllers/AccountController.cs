@@ -16,6 +16,9 @@ using MyPrivateLibraryAPI.Models;
 
 namespace MyPrivateLibraryAPI.Controllers
 {
+    /// <summary>
+    /// Controls registration and login operations
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -31,10 +34,21 @@ namespace MyPrivateLibraryAPI.Controllers
             _config = config;
         }
 
+        /// <summary>
+        /// Login post method
+        /// </summary>
+        /// <returns>
+        /// JWT token when valid
+        /// </returns>
         [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody]LoginRequest loginModel)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var user = await Authenticate(loginModel);
 
             if(user != null)
@@ -45,10 +59,21 @@ namespace MyPrivateLibraryAPI.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Register post method
+        /// </summary>
+        /// <returns>
+        /// JWT token when valid
+        /// </returns>
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]RegisterRequest registerModel)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var user = new ApplicationUser()
             {
                 UserName = registerModel.Email,

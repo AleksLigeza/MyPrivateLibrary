@@ -97,6 +97,11 @@ namespace MyPrivateLibraryAPI.Services
             if(toUpdate == null)
                 return false;
 
+            if (!checkIfReadingStartIsBeforeEnd(book))
+            {
+                return false;
+            }
+
             toUpdate.PublicationYear = book.PublicationYear;
             toUpdate.ReadingEnd = book.ReadingEnd;
             toUpdate.ReadingStart = book.ReadingStart;
@@ -106,5 +111,25 @@ namespace MyPrivateLibraryAPI.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+
+        #region Helpers
+
+        private bool checkIfReadingStartIsBeforeEnd(Book book)
+        {
+            if (book.ReadingEnd != null && book.ReadingStart == null)
+            {
+                return false;
+            }
+
+            if (book.ReadingEnd != null && book.ReadingStart != null && book.ReadingEnd < book.ReadingStart)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

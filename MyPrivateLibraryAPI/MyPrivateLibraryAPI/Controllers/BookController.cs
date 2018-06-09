@@ -14,6 +14,10 @@ using MyPrivateLibraryAPI.Models;
 
 namespace MyPrivateLibraryAPI.Controllers
 {
+    /// <summary>
+    /// Controls book management.
+    /// User must be logged in.
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
@@ -28,6 +32,12 @@ namespace MyPrivateLibraryAPI.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Gets all books for current user.
+        /// </summary>
+        /// <returns>
+        /// List of all user's books
+        /// </returns>
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllUserBooks()
         {
@@ -36,9 +46,20 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok(AutoMapper.Mapper.Map<List<BookResponse>>(books));
         }
 
+        /// <summary>
+        /// Gets books after applying filters.
+        /// </summary>
+        /// <returns>
+        /// List of filtered user's books
+        /// </returns>
         [HttpGet("Filter/{yearSince}/{yearTo}/{read}/{currentlyReading}/{order}/{title?}")]
         public async Task<IActionResult> GetFilteredBooks(int yearSince, int yearTo, bool read, bool currentlyReading, int order, string title)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var filters = new BookFilters()
             {
                 PublicationYearSince = yearSince,
@@ -54,6 +75,12 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok(AutoMapper.Mapper.Map<List<BookResponse>>(books));
         }
 
+        /// <summary>
+        /// Gets single book with given Id if user owns this book.
+        /// </summary>
+        /// <returns>
+        /// Book with Id
+        /// </returns>
         [HttpGet("Get/{id}")]
         public async Task<IActionResult> GetOne(int id)
         {
@@ -68,9 +95,20 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok(AutoMapper.Mapper.Map<BookResponse>(book));
         }
 
+        /// <summary>
+        /// Adds book to the database
+        /// </summary>
+        /// <returns>
+        /// 200 status when successed
+        /// </returns>
         [HttpPost("AddBook")]
         public async Task<IActionResult> AddBook([FromBody] BookRequest bookRequest)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var user = await GetCurrentUser();
             var book = AutoMapper.Mapper.Map<Book>(bookRequest);
 
@@ -81,6 +119,12 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Removes book with given Id from the database. Only owner can remve his book.
+        /// </summary>
+        /// <returns>
+        /// 200 status when successed
+        /// </returns>
         [HttpDelete("RemoveBook/{id}")]
         public async Task<IActionResult> RemoveBook(int id)
         {
@@ -101,9 +145,20 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Updates book in the database
+        /// </summary>
+        /// <returns>
+        /// 200 status when successed
+        /// </returns>
         [HttpPut("UpdateBook")]
         public async Task<IActionResult> UpdateBook([FromBody] BookRequest bookRequest)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var user = await GetCurrentUser();
             var book = AutoMapper.Mapper.Map<Book>(bookRequest);
 
@@ -124,9 +179,20 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Adds ReadingStart to the given book. Only owner can change state of his book.
+        /// </summary>
+        /// <returns>
+        /// 200 status when successed
+        /// </returns>
         [HttpPut("SetStartReading")]
         public async Task<IActionResult> SetStartReading([FromBody] BookRequest bookRequest)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var user = await GetCurrentUser();
             var book = AutoMapper.Mapper.Map<Book>(bookRequest);
 
@@ -147,9 +213,20 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Adds ReadingEnd to the given book. Only owner can change state of his book.
+        /// </summary>
+        /// <returns>
+        /// 200 status when successed
+        /// </returns>
         [HttpPut("SetEndReading")]
         public async Task<IActionResult> SetEndReading([FromBody] BookRequest bookRequest)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var user = await GetCurrentUser();
             var book = AutoMapper.Mapper.Map<Book>(bookRequest);
 
