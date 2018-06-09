@@ -1,15 +1,90 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
-<p>If you want to enable server-side prerendering, see the steps in <code>Startup.cs</code>.</p>
+<div class="row">
+  <div class="col-sm-12 col-md-6">
+
+    <div class="form-box">
+      <div class="form-top">
+        <h3>
+          <b>Log In</b>
+        </h3>
+      </div>
+      <div class="form-bottom">
+        <form class="login-form" #loginForm="ngForm">
+
+          <div class="form-group" [class.has-error]="loginEmail.invalid && loginEmail.touched">
+            <label class="sr-only" for="loginEmail">Email</label>
+
+            <input autocomplete="off" #loginEmail="ngModel" required email maxlength="50" class="form-control" name="loginEmail" placeholder="Email"
+              [(ngModel)]="loginData.email">
+
+          </div>
+
+          <div class="form-group" [class.has-error]="loginPassword.invalid && loginPassword.dirty">
+            <label class="sr-only" for="loginPassword">Password</label>
+
+            <input autocomplete="off" #loginPassword="ngModel" required minlength="6" maxlength="50" type="password" class="form-control"
+              name="loginPassword" placeholder="Password" [(ngModel)]="loginData.password">
+
+          </div>
+
+          <button type="submit" (click)="logIn()" class="btn btn-info" [disabled]="!loginForm.form.valid">Log in!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-md-6">
+    <div class="form-box">
+      <div class="form-top">
+        <h3>
+          <b>Register</b>
+        </h3>
+      </div>
+
+      <div class="form-bottom" [class.has-error]="registerEmail.invalid && registerEmail.touched">
+        <form class="registration-form" #registerForm="ngForm">
+          <div class="form-group">
+            <label class="sr-only" for="registerEmail">Email</label>
+
+            <input autocomplete="off" #registerEmail="ngModel" required email maxlength="50" class="form-control" name="registerEmail"
+              placeholder="Email" [(ngModel)]="registerData.email">
+
+          </div>
+
+          <div class="form-group" [class.has-error]="registerFirstname.invalid && registerFirstname.touched">
+            <label class="sr-only" for="registerFirstname">Firstname</label>
+
+            <input autocomplete="off" #registerFirstname="ngModel" required maxlength="50" class="form-control" name="registerFirstname"
+              placeholder="Firstname" [(ngModel)]="registerData.firstname">
+
+          </div>
+
+          <div class="form-group" [class.has-error]="registerLastname.invalid && registerLastname.touched">
+            <label class="sr-only" for="registerLastname">Lastname</label>
+
+            <input autocomplete="off" #registerLastname="ngModel" required maxlength="50" class="form-control" name="registerLastname"
+              placeholder="Lastname" [(ngModel)]="registerData.lastname">
+
+          </div>
+
+          <div class="form-group" [class.has-error]="registerPassword.invalid && registerPassword.dirty">
+            <label class="sr-only" for="registerPassword">Password</label>
+
+            <input autocomplete="off" #registerPassword="ngModel" required minlength="5" maxlength="50" type="password" class="form-control"
+              name="registerPassword" placeholder="Password" [(ngModel)]="registerData.password">
+
+          </div>
+
+          <div class="form-group" [class.has-error]="registerPasswordRepeat.dirty && (registerPasswordRepeat.invalid || !(registerData.password === registerData.passwordRepeat))">
+            <label class="sr-only" for="registerPasswordRepeat">Repeat your password</label>
+
+            <input autocomplete="off" #registerPasswordRepeat="ngModel" required minlength="5" maxlength="50" type="password" class="form-control"
+              name="registerPasswordRepeat" placeholder="Repeat password" [(ngModel)]="registerData.passwordRepeat">
+
+          </div>
+
+          <button type="submit" (click)="register()" class="btn btn-info" [disabled]="!registerForm.form.valid || !(registerData.password === registerData.passwordRepeat)">Register!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

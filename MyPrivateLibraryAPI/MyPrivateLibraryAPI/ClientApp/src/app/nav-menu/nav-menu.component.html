@@ -13,18 +13,18 @@
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
             <ul class='nav navbar-nav'>
                 <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                    <a [routerLink]='["/"]' (click)='collapse()'>
+                    <a [routerLink]='["/"]' (click)='collapse()' *ngIf="!isAuthenticated">
                         <span class='glyphicon glyphicon-home'></span> Home
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/counter"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-education'></span> Counter
+                <li [routerLinkActive]='["link-active"]' *ngIf="isAuthenticated">
+                    <a [routerLink]='["/dashboard"]' (click)='collapse()'>
+                        <span class='glyphicon glyphicon-th-list'></span> Dashboard
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
+                <li *ngIf="isAuthenticated">
+                    <a (click)='collapse()' (click)="logOut()">
+                        <span class='glyphicon glyphicon-log-out'></span> LogOut
                     </a>
                 </li>
             </ul>

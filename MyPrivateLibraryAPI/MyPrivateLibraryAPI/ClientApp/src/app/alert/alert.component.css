@@ -1,0 +1,23 @@
+.alertList {
+    /* position: absolute,
+    /* top: 65px;
+    left: 10px;
+    right: 10px;*/
+    /* z-index:9999; */
+}
+
+.alert-success {
+    background-color: rgba(212, 237, 218, 0.95);
+}
+
+.alert-danger {
+    background-color: rgba(248, 215, 218, 0.95);
+}
+
+.alert-info {
+    background-color: rgba(209, 236, 241, 0.95);
+}
+
+.alert-warning {
+    background-color: rgba(255, 243, 205, 0.95);
+}
