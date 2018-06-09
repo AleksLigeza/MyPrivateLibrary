@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BookFilters } from '../models/BookFilers';
+import { BookFilters, OrderByFiled } from '../models/BookFilers';
 import { Book } from '../models/Book';
 import { AlertService } from '../services/alert.service';
 import { BooksService } from '../services/books-service.service';
@@ -45,10 +45,16 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  changeOrder(pos: number) {
+    this.reloadPage();
+    this.filters.Order = pos;
+    this.getBooksWithFilters();
+  }
+
   getBooks() {
     this.booksService.GetBooks().subscribe(
       res => {
-        this.addBooksToArray(Book.createArray(res));
+        this.books = Book.createArray(res);
       },
       err => {
         this.alert.error('Loading error');
@@ -63,29 +69,12 @@ export class DashboardComponent implements OnInit {
 
     this.booksService.GetBooksWithFilters(tempFilters).subscribe(
       res => {
-        this.addBooksToArray(Book.createArray(res));
+        this.books = Book.createArray(res);
       },
       err => {
         this.alert.error('Loading error');
       }
     );
-  }
-
-  addBooksToArray(res: Book[]) {
-    if (this.shouldResetBooks) {
-      this.resetBooks();
-    }
-
-    this.books = this.books.concat(res);
-    this.records = this.books.length;
-
-    if (this.count !== -1) {
-      if (this.records !== this.count) {
-        this.alert.info('New books loaded!');
-      } else {
-        this.alert.warn('There is no more books!');
-      }
-    }
   }
 
   clearFilters() {

@@ -72,9 +72,17 @@
       <div class="form-group-border">
         <table class="table table-hover" style="text-align: center">
           <thead>
-            <th class="centerHeader">Title</th>
-            <th class="centerHeader">Year</th>
-            <th class="centerHeader">Status</th>
+            <th class="centerHeader">Title
+                <span (click) = "changeOrder(0)" class="glyphicon glyphicon-chevron-up"></span>
+                <span (click) = "changeOrder(1)" class="glyphicon glyphicon-chevron-down"></span>
+            </th>
+            <th class="centerHeader">Year
+                <span (click) = "changeOrder(2)" class="glyphicon glyphicon-chevron-up"></span>
+                <span (click) = "changeOrder(3)" class="glyphicon glyphicon-chevron-down"></span>
+            </th>
+            <th class="centerHeader">Status
+              
+            </th>
             <th class="centerHeader">Management</th>
           </thead>
           <tbody>

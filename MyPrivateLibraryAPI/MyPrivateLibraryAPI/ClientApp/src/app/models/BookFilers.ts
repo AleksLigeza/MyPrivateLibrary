@@ -4,6 +4,7 @@ export class BookFilters {
     Title: string;
     Read: boolean;
     CurrentlyReading: boolean;
+    Order: number;
 
     constructor() {
         this.PublicationYearSince = 0;
@@ -11,6 +12,7 @@ export class BookFilters {
         this.Title = '';
         this.Read = false;
         this.CurrentlyReading = false;
+        this.Order = OrderByFiled.OrderByTitle;
     }
 
     nullAllParameters() {
@@ -19,6 +21,7 @@ export class BookFilters {
         this.Title = null;
         this.Read = null;
         this.CurrentlyReading = null;
+        this.Order = 0;
     }
 
     removeNulls() {
@@ -40,3 +43,10 @@ export class BookFilters {
         }
     }
 }
+
+export enum OrderByFiled {
+    OrderByTitle,
+    OrderByTitleDesc,
+    OrderByYear,
+    OrderByYearDesc
+  }

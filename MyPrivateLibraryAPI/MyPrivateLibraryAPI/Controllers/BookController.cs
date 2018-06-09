@@ -36,8 +36,8 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok(AutoMapper.Mapper.Map<List<BookResponse>>(books));
         }
 
-        [HttpGet("Filter/{yearSince}/{yearTo}/{read}/{currentlyReading}/{title?}")]
-        public async Task<IActionResult> GetFilteredBooks(int yearSince, int yearTo, bool read, bool currentlyReading, string title)
+        [HttpGet("Filter/{yearSince}/{yearTo}/{read}/{currentlyReading}/{order}/{title?}")]
+        public async Task<IActionResult> GetFilteredBooks(int yearSince, int yearTo, bool read, bool currentlyReading, int order, string title)
         {
             var filters = new BookFilters()
             {
@@ -45,7 +45,8 @@ namespace MyPrivateLibraryAPI.Controllers
                 PublicationYearTo = yearTo,
                 Read = read,
                 CurrentlyReading = currentlyReading,
-                Title = title
+                Title = title,
+                order = (OrderByFiled)order
             };
 
             var user = await GetCurrentUser();

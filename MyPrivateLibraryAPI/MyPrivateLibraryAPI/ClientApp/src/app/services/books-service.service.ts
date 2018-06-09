@@ -31,6 +31,7 @@ export class BooksService {
       filters.PublicationYearTo  + '/' +
       filters.Read + '/' +
       filters.CurrentlyReading + '/' +
+      filters.Order + '/' +
       filters.Title;
 
     return this.http.get(this.baseUrl + filtersUrl);

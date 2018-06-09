@@ -48,6 +48,24 @@ namespace MyPrivateLibraryAPI.Services
                 books = books.Where(x => x.ReadingStart <= DateTime.UtcNow && x.ReadingEnd == null);
             }
 
+            switch (filters.order)
+            {
+                case OrderByFiled.OrderByTitle:
+                    books = books.OrderBy(x => x.Title);
+                    break;
+                case OrderByFiled.OrderByTitleDesc:
+                    books = books.OrderByDescending(x => x.Title);
+                    break;
+                case OrderByFiled.OrderByYear:
+                    books = books.OrderBy(x => x.PublicationYear);
+                    break;
+                case OrderByFiled.OrderByYearDesc:
+                    books = books.OrderByDescending(x => x.PublicationYear);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             return books.ToListAsync();
         }
 

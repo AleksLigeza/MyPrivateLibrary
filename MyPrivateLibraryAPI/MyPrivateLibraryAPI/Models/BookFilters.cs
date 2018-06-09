@@ -12,5 +12,16 @@ namespace MyPrivateLibraryAPI.Models
         public string Title { get; set; }
         public bool Read { get; set; }
         public bool CurrentlyReading { get; set; }
+
+        public OrderByFiled order { get; set; }
+
+    }
+
+    public enum OrderByFiled
+    {
+        OrderByTitle,
+        OrderByTitleDesc,
+        OrderByYear,
+        OrderByYearDesc
     }
 }
