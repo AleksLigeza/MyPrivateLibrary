@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPrivateLibraryAPI", "MyPrivateLibraryAPI\MyPrivateLibraryAPI.csproj", "{4DC49EA5-5647-427F-B6E5-B141F495A5DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPrivateLibraryAPI.Tests", "MyPrivateLibraryAPI.Tests\MyPrivateLibraryAPI.Tests.csproj", "{7F79666D-045A-4C3A-B360-C4EE794EB5C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPrivateLibraryAPI.Tests", "MyPrivateLibraryAPI.Tests\MyPrivateLibraryAPI.Tests.csproj", "{7F79666D-045A-4C3A-B360-C4EE794EB5C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

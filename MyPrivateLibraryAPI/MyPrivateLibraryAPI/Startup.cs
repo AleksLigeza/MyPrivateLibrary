@@ -19,6 +19,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.IdentityModel.Tokens;
 using MyPrivateLibraryAPI.Interfaces;
 using MyPrivateLibraryAPI.Services;
@@ -90,6 +91,11 @@ namespace MyPrivateLibraryAPI
             services.AddScoped<IBooksService, BooksService>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
+
             services.AddMvc();
         }
 
@@ -110,7 +116,23 @@ namespace MyPrivateLibraryAPI
 
             app.UseAuthentication();
 
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
             app.UseMvc();
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if(env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+            });
         }
     }
 }

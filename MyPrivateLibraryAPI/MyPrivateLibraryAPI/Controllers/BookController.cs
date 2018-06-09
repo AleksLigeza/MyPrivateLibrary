@@ -36,16 +36,16 @@ namespace MyPrivateLibraryAPI.Controllers
             return Ok(AutoMapper.Mapper.Map<List<BookResponse>>(books));
         }
 
-        [HttpGet("Filter/{yearSince}/{yearTo}/{title}/{read}/{currentlyReading}")]
-        public async Task<IActionResult> GetFilteredBooks(int yearSince, int yearTo, string title, bool read, bool currentlyReading)
+        [HttpGet("Filter/{yearSince}/{yearTo}/{read}/{currentlyReading}/{title?}")]
+        public async Task<IActionResult> GetFilteredBooks(int yearSince, int yearTo, bool? read, bool? currentlyReading, string title)
         {
             var filters = new BookFilters()
             {
                 PublicationYearSince = yearSince,
                 PublicationYearTo = yearTo,
-                Title = title,
                 Read = read,
-                CurrentlyReading = currentlyReading
+                CurrentlyReading = currentlyReading,
+                Title = title
             };
 
             var user = await GetCurrentUser();
@@ -59,9 +59,9 @@ namespace MyPrivateLibraryAPI.Controllers
             var user = await GetCurrentUser();
             var book = await _booksService.GetBookWithId(id);
 
-            if (book.UserId != user.Id)
+            if(book.UserId != user.Id)
             {
-                return BadRequest();
+                return NoContent();
             }
 
             return Ok(AutoMapper.Mapper.Map<BookResponse>(book));
@@ -87,12 +87,16 @@ namespace MyPrivateLibraryAPI.Controllers
 
             var book = await _booksService.GetBookWithId(id);
 
-            if (book != null && book.UserId != user.Id)
+            if(book != null && book.UserId != user.Id)
             {
                 return NoContent();
             }
 
-            await _booksService.RemoveBook(id);
+            if(!await _booksService.RemoveBook(id))
+            {
+                return NoContent();
+            }
+
             return Ok();
         }
 
@@ -102,7 +106,12 @@ namespace MyPrivateLibraryAPI.Controllers
             var user = await GetCurrentUser();
             var book = AutoMapper.Mapper.Map<Book>(bookRequest);
 
-            if(await _booksService.UpdateBook(book))
+            if(book != null && book.UserId != user.Id)
+            {
+                return NoContent();
+            }
+
+            if(!await _booksService.UpdateBook(book))
             {
                 return NoContent();
             }

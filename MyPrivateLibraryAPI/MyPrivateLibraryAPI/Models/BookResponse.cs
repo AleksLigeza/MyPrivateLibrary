@@ -11,6 +11,5 @@ namespace MyPrivateLibraryAPI.Models
 
         public DateTime? ReadingStart { get; set; }
         public DateTime? ReadingEnd { get; set; }
-        public string UserId { get; set; }
     }
 }
