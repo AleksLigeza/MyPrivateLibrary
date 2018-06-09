@@ -10,7 +10,7 @@ namespace MyPrivateLibraryAPI.Models
         public int? PublicationYearSince { get; set; }
         public int? PublicationYearTo { get; set; }
         public string Title { get; set; }
-        public bool? Read { get; set; }
-        public bool? CurrentlyReading { get; set; }
+        public bool Read { get; set; }
+        public bool CurrentlyReading { get; set; }
     }
 }

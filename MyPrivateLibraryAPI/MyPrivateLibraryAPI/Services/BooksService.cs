@@ -39,11 +39,11 @@ namespace MyPrivateLibraryAPI.Services
                 books = books.Where(x => x.Title.Contains(filters.Title));
             }
 
-            if(filters.Read != null)
+            if(filters.Read)
             {
                 books = books.Where(x => x.ReadingEnd <= DateTime.UtcNow);
             }
-            else if(filters.CurrentlyReading != null)
+            else if(filters.CurrentlyReading)
             {
                 books = books.Where(x => x.ReadingStart <= DateTime.UtcNow && x.ReadingEnd == null);
             }

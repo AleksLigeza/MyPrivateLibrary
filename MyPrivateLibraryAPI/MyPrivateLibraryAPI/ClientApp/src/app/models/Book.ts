@@ -5,7 +5,7 @@ export class Book {
     ReadingStart: Date;
     ReadingEnd: Date;
 
-    constructor(id: string) {
+    constructor() {
         this.Id = null;
         this.Title = null;
         this.PublicationYear = null;

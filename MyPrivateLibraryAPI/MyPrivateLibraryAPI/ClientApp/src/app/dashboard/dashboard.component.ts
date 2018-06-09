@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   filters: BookFilters;
   filtersPos: number;
   books: Book[];
+  newBook: Book;
 
   filtersVisible: boolean;
   filtersApplied: boolean;
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.newBook = new Book();
     this.resetBooks();
     this.clearFilters();
     this.getBooks();
@@ -91,15 +93,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  loadMore() {
-    this.count = this.records;
-    if (!this.filtersApplied) {
-      this.getBooks();
-    } else {
-      this.getBooksWithFilters();
-    }
-  }
-
   showHideFilters() {
     this.filtersVisible = !this.filtersVisible;
   }
@@ -122,5 +115,44 @@ export class DashboardComponent implements OnInit {
     this.shouldResetBooks = true;
     this.records = 0;
     this.count = -1;
+  }
+
+  AddBook() {
+    this.booksService.AddBook(Object.create(this.newBook)).subscribe(
+      res => {
+        this.newBook = new Book();
+        this.resetBooks();
+        this.clearFilters();
+        this.getBooks();
+      },
+      err => {
+        this.alert.error('Invalid data');
+      });
+  }
+
+  AddStartTime(book: Book) {
+    this.booksService.AddStartTime(book).subscribe(
+      res => {
+        this.newBook = new Book();
+        this.resetBooks();
+        this.clearFilters();
+        this.getBooks();
+      },
+      err => {
+        this.alert.error('Invalid data');
+      });
+  }
+
+  AddEndTime(book: Book) {
+    this.booksService.AddEndTime(book).subscribe(
+      res => {
+        this.newBook = new Book();
+        this.resetBooks();
+        this.clearFilters();
+        this.getBooks();
+      },
+      err => {
+        this.alert.error('Invalid data');
+      });
   }
 }

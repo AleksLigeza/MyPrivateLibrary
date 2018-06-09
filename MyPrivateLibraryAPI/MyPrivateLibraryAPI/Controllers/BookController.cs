@@ -37,7 +37,7 @@ namespace MyPrivateLibraryAPI.Controllers
         }
 
         [HttpGet("Filter/{yearSince}/{yearTo}/{read}/{currentlyReading}/{title?}")]
-        public async Task<IActionResult> GetFilteredBooks(int yearSince, int yearTo, bool? read, bool? currentlyReading, string title)
+        public async Task<IActionResult> GetFilteredBooks(int yearSince, int yearTo, bool read, bool currentlyReading, string title)
         {
             var filters = new BookFilters()
             {
@@ -110,6 +110,52 @@ namespace MyPrivateLibraryAPI.Controllers
             {
                 return NoContent();
             }
+
+            if(!await _booksService.UpdateBook(book))
+            {
+                return NoContent();
+            }
+
+            return Ok();
+        }
+
+        [HttpPut("SetStartReading")]
+        public async Task<IActionResult> SetStartReading([FromBody] BookRequest bookRequest)
+        {
+            var user = await GetCurrentUser();
+            var book = AutoMapper.Mapper.Map<Book>(bookRequest);
+
+            var toUpdate = await _booksService.GetBookWithId(book.Id);
+            if(toUpdate.UserId != user.Id || toUpdate.ReadingStart != null)
+            {
+                return NoContent();
+            }
+
+            book = toUpdate;
+            book.ReadingStart = DateTime.Now;
+
+            if(!await _booksService.UpdateBook(book))
+            {
+                return NoContent();
+            }
+
+            return Ok();
+        }
+
+        [HttpPut("SetEndReading")]
+        public async Task<IActionResult> SetEndReading([FromBody] BookRequest bookRequest)
+        {
+            var user = await GetCurrentUser();
+            var book = AutoMapper.Mapper.Map<Book>(bookRequest);
+
+            var toUpdate = await _booksService.GetBookWithId(book.Id);
+            if(toUpdate.UserId != user.Id || toUpdate.ReadingEnd != null || toUpdate.ReadingStart == null)
+            {
+                return NoContent();
+            }
+
+            book = toUpdate;
+            book.ReadingEnd = DateTime.Now;
 
             if(!await _booksService.UpdateBook(book))
             {
